@@ -1,0 +1,166 @@
+@include treelist-ui(
+    $ui: 'nav',
+
+    // Extra padding left/right
+    $padding: 0 10px,
+
+    // Black-ish background color
+    $background-color: #3E495D,
+    $toolstrip-background-color: #3E495D,
+
+    $tool-selected-color: #f0f0f0,
+    $tool-selected-background-color: lighten(#D3251C, 10%),
+
+    $tool-float-indicator-width: 4px,
+    $tool-float-indicator-color: #D3251C,
+
+    // Darker background for expanded subtrees
+    $item-expanded-background-color: #2c3845,
+
+    // Taller line height
+    $item-line-height : 36px,
+
+    // Off-white text
+    $item-icon-color: #FFF,
+    $item-expander-color: #FFF,
+    $item-text-color: #FFF,
+
+    // Brighter when hovered
+    $row-over-background-color: #4f606f,
+    $item-icon-over-color: #fff,
+    $item-expander-over-color: #fff,
+    $item-text-over-color: #fff,
+
+    $row-indicator-width: 6px,
+    $row-indicator-selected-color: #D3251C,
+    $row-indicator-selected-over-color: lighten(#D3251C, 50%),
+    $row-indicator-over-color: lighten(#D3251C, 50%),
+
+    // Various sizes for the pieces:
+    $item-icon-font-size: 18px,
+    $item-icon-width: 24px,
+    $item-expander-font-size: 16px,
+    $item-expander-width: 24px,
+
+    $row-selected-background-color: lighten(#D3251C, 50%)
+);
+
+@include treelist-ui(
+    $ui: 'nav-normal',
+    // Extra padding left/right
+    $padding: 0 10px,
+    // Taller line height
+    $item-line-height : 30px,
+);
+/*展开项的背景色一致*/
+.x-treelist-nav .x-treelist-item-expanded {
+    background-color: #3E495D;
+};
+
+/*原来生成的是：.treelist-with-nav .x-panel-body,就是多了个x-，装什么装啊*/
+.treelist-with-nav .#{$prefix}panel-body {
+    background-color: #3E495D;
+};
+
+/*没用到，本来是要实现app-header上的动态背景色*/
+@include extjs-panel-ui(
+    $ui: 'main-header',
+    /*$ui-header-background-color: #808080*/
+    $ui-header-color: white,
+    $ui-header-font-weight: bold,
+    $ui-header-font-size: large,
+    /*$ui-header-padding: 6,*/
+);
+/*实现主页main-header上的动态背景色*/
+.x-panel-header-main-header-top { 
+    @include background-gradient(#FFF, bevel, down)
+};
+/*防止标题文字被剃头*/
+.x-panel-header-title-main-header{
+    line-height: 19px
+};
+/*标题文字颜色*/
+.x-panel-header-title-main-header {
+    color: #002E83;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: helvetica, arial, verdana, sans-serif;
+    line-height: 16px;
+}
+/*阴影效果和header的padding*/
+.x-panel-header-main-header-horizontal.x-header-noborder {
+    padding: 2px 0px 8px 4px;
+    -webkit-box-shadow: 0 8px 8px 0 rgba(0,93,160,1);
+    -moz-box-shadow: 5px 5px 5px 5px #487195;
+};
+.x-treelist-item-icon,
+.x-treelist-item-tool {
+    color: #DA0D0D;
+}
+/*main head上的图标*/
+.x-panel-header-title-main-header {
+    top: 3px!important;;
+}
+.x-panel-header-title-main-header > .x-title-icon-wrap-main-header > .x-title-icon-main-header {
+    /*width: 16px;
+    height: 16px;
+    font-size: 16px;
+    color: #333;
+    background-position: center center;
+    opacity: 0.5;*/
+
+    width: 5776px;
+    height: 1446px;
+    background: url(icons/mainlogoincludingwords.jpg) no-repeat center;
+    top: 5px!important;
+    zoom: 4%;
+    opacity: 1;
+    /*兼容firefor*/
+
+    -moz-transform: scale(0.45);
+    -moz-transform-origin: left -20px 0px;
+};
+/*留下左边logo的位置，标题字体上下对齐*/
+.x-panel-header-title-main-header > .x-title-text-main-header {
+    padding: 2px 200px 1px;
+};
+.x-panel-header-main-header-horizontal {
+    padding: 0px;
+};
+.x-panel-header-main-header {
+    font-size: large;
+    border: 0px solid #d0d0d0;
+};
+.x-panel-header-title-main-header > .x-title-icon-wrap-main-header.x-title-icon-left {
+    width: 18px;
+    padding-right: 2px;
+    padding-left: 5px;
+};
+
+/*override origin grid item，为了大字体*/
+.x-grid-item {
+    font: normal 15px helvetica, arial, verdana, sans-serif;
+};
+.x-column-header {
+    font: bold 15px helvetica, arial, verdana, sans-serif;
+};
+.x-treelist-item-text {
+    font-size: 15px;
+}
+
+/*中国移动图标，在headerbar上*/
+.chinamobilelogo {
+    // position: absolute!important;
+    top: 5!important;
+    right: 45px!important;
+    width: 160px;
+    height: 50px;
+    background: url(icons/chinamobilelogo1.png) no-repeat center;
+};
+.chinamobilelogofill {
+    // position: absolute!important;
+    top: 5!important;
+    right: 45px!important;
+    width: 5px;
+    height: 50px;
+};

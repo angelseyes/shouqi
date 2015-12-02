@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd"
+	default-autowire="byName">
+
+
+	<!-- Configure connectionFactory -->
+	<bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>${gw.jms.brokerurl}</value>
+				</property>
+			</bean>
+		</property>
+		<property name="maxConnections" value="${gw.jms.max.conn}"></property>
+	</bean>
+
+
+	<bean id="Q.GW.PROCESSING.QUEUE" class="org.apache.activemq.command.ActiveMQQueue"
+		scope="prototype">
+		<!-- Name of Queue -->
+		<constructor-arg index="0" value="Q.GW.IN.PROCESSING.QUEUE" />
+	</bean>
+
+
+	<!-- Spring JMS Template -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate"
+		scope="prototype">
+		<property name="connectionFactory" ref="jmsFactory" />
+		<property name="sessionAcknowledgeMode" value="1" />
+		<property name="sessionTransacted" value="true" />
+		<property name="receiveTimeout" value="30000" />
+		<property name="defaultDestination" ref="Q.GW.PROCESSING.QUEUE" />
+	</bean>
+
+	<bean id="jmsTransactionManager"
+		class="org.springframework.jms.connection.JmsTransactionManager"
+		scope="prototype">
+		<property name="connectionFactory" ref="jmsFactory" />
+	</bean>
+
+
+
+	<bean id="outBoundQueueContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="autoStartup" value="false" />
+		<property name="connectionFactory" ref="jmsFactory" />
+		<property name="destination" ref="Q.GW.OUT.BOUND.QUEUE" />
+		<property name="messageListener" ref="outBoundQueueListenser" />
+		<property name="sessionTransacted" value="true" />
+		<property name="concurrentConsumers" value="${jms.activemq.concurrentConsumers}" />
+		<property name="maxConcurrentConsumers" value="${jms.activemq.maxConcurrentConsumers}" />
+	</bean>
+
+	<bean id="outBoundQueueListenser" class="cn.concar.gw.jms.OutBoundQueueListenser" />
+
+	<bean id="Q.GW.OUT.BOUND.QUEUE" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0"
+			value="${jms.activemq.out.bound.queue}" />
+	</bean>
+
+</beans> 

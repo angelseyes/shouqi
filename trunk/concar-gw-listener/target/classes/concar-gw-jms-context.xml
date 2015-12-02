@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-autowire="byName">
+
+
+	<!-- Configure connectionFactory -->
+	<bean id="platformJmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL">
+					<value>failover:(tcp://${jms.activemq.gw.dest}:61616?closeAsync=false)</value>
+				</property>
+			</bean>
+		</property>
+		<property name="maxConnections" value="10"></property>
+	</bean>
+
+	<!-- Destination of Queue -->
+	<bean id="Q.GW.IN.PROCESSING.QUEUE" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0"
+			value="${jms.activemq.gw.processing.queue}" />
+	</bean>
+
+	<bean id="inProcessingQueueListenser" class="cn.concar.gw.listener.jms.InProcessingQueueListenser" />
+
+
+
+
+
+	<bean id="Q.GW.OUT.TERMINAL.QUEUE" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0"
+			value="${jms.activemq.veh.terminal.queue}" />
+	</bean>
+
+
+
+
+	<bean id="inProcessingQueueContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="autoStartup" value="true" />
+		<property name="connectionFactory" ref="platformJmsFactory" />
+		<property name="destination" ref="Q.GW.IN.PROCESSING.QUEUE" />
+		<property name="messageListener" ref="inProcessingQueueListenser" />
+		<property name="sessionTransacted" value="true" />
+		<property name="concurrentConsumers" value="${jms.activemq.concurrentConsumers}" />
+		<property name="maxConcurrentConsumers" value="${jms.activemq.maxConcurrentConsumers}" />
+	</bean>
+
+
+
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="platformJmsFactory" />
+		<property name="defaultDestination" ref="Q.GW.OUT.TERMINAL.QUEUE" />
+	</bean>
+
+	<bean id="platformJmsTransManager"
+		class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="platformJmsFactory" />
+	</bean>
+
+
+
+
+</beans> 

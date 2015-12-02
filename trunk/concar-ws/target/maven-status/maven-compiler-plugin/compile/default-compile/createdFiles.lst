@@ -1,0 +1,11 @@
+cn\concar\ws\model\out\BaiduGeocoder.class
+cn\concar\ws\service\MsGateway.class
+cn\concar\ws\client\WsClientFactory.class
+cn\concar\ws\service\IMsGateway.class
+cn\concar\ws\model\in\Coordinate.class
+cn\concar\ws\model\out\BaiduLocation.class
+cn\concar\ws\model\out\BaiduGeocoderResponse.class
+cn\concar\ws\model\out\BaiduCoordinate.class
+cn\concar\ws\client\BaiduClient.class
+cn\concar\ws\model\out\BaiduAddressComponent.class
+cn\concar\ws\model\out\BaiduResponse.class

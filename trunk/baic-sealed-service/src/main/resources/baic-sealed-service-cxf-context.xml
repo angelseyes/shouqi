@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+http://cxf.apache.org/jaxws 
+http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<jaxrs:server id="allMap" address="/allMap">
+		<jaxrs:serviceBeans>
+			<ref bean="allMapService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+		<jaxrs:providers>
+			<ref bean='jaxrsProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+
+	<jaxrs:server id="asset" address="/asset">
+		<jaxrs:serviceBeans>
+			<ref bean="assetService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+		<jaxrs:providers>
+			<ref bean='jaxrsProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<jaxrs:server id="monitor" address="/monitor">
+		<jaxrs:serviceBeans>
+			<ref bean="monitorService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+		<jaxrs:providers>
+			<ref bean='jaxrsProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+	<jaxrs:server id="report" address="/report">
+		<jaxrs:serviceBeans>
+			<ref bean="reportService" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:languageMappings>
+			<entry key="en" value="en-gb" />
+		</jaxrs:languageMappings>
+		<jaxrs:providers>
+			<ref bean='jaxrsProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<bean id='jaxrsProvider' class='com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider' />
+
+	<bean id="allMapService" class="baic.sealed.service.AllMapService" />
+	<bean id="assetService" class="baic.sealed.service.AssetService" />
+	<bean id="monitorService" class="baic.sealed.service.MonitorService" />
+	<bean id="reportService" class="baic.sealed.service.ReportService" />
+
+</beans>

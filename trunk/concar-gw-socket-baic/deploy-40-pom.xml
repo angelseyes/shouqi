@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>concar-gw-socket-deploy-40</artifactId>
+	<groupId>concar-gw</groupId>
+	<packaging>pom</packaging>
+	<version>1.0.0</version>
+
+	<build>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+					<configuration>
+						<tasks>
+							<scp
+								todir="concar:concar123@10.25.153.40:/opt/shared/deploy/baic/${node}/concar-gw-socket"
+								trust="true" failonerror="false">
+								<fileset dir="target/">
+									<include name="*.jar" />
+								</fileset>
+							</scp>
+							<scp
+								todir="concar:concar123@10.25.153.40:/opt/shared/deploy/baic/${node}/concar-gw-socket/lib"
+								trust="true" failonerror="false">
+								<fileset dir="target/dependency/">
+									<include name="*.jar" />
+								</fileset>
+							</scp>
+						</tasks>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant-jsch</artifactId>
+							<version>1.9.6</version>
+						</dependency>
+						<dependency>
+							<groupId>com.jcraft</groupId>
+							<artifactId>jsch</artifactId>
+							<version>0.1.53</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<profiles>
+		<profile>
+			<id>concar-esb-dg01</id>
+			<properties>
+				<node>concar-esb-dg01</node>
+			</properties>
+		</profile>
+		<profile>
+			<id>concar-esb-dg02</id>
+			<properties>
+				<node>concar-esb-dg02</node>
+			</properties>
+		</profile>
+	</profiles>
+</project>
