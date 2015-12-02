@@ -1,7 +1,0 @@
-{
-    success: true,
-    data: [{
-        "theTotalNumberOfSealedCar": "300",
-        "completeStorageTime": "2015/10/30"
-    }]
-}
